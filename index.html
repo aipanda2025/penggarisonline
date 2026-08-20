@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, high-performance HTML showcase demo built with rich aesthetics, glassmorphism, and dynamic animations.">
+    <title>Penggaris Online - Demo Interactive Page</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #111827;
+            --bg-glass: rgba(17, 24, 39, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --accent-glow: rgba(139, 92, 246, 0.35);
+
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --card-bg: rgba(0, 0, 0, 0.02);
+            --card-border: rgba(0, 0, 0, 0.08);
+            
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+
+            --accent-glow: rgba(139, 92, 246, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        /* Ambient Glow Background Spheres */
+        .ambient-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-purple) 0%, rgba(0,0,0,0) 70%);
+            top: -150px;
+            left: -150px;
+            opacity: 0.25;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-cyan) 0%, rgba(0,0,0,0) 70%);
+            bottom: -100px;
+            right: -100px;
+            opacity: 0.25;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Header Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 15px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Main Layout */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: var(--accent-purple);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.03); }
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .grid-section {
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+        }
+
+        .card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Interactive Showcase Component */
+        .demo-widget {
+            margin-top: 4rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .widget-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .widget-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .counter-display {
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .counter-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Toast Container */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent-purple);
+            color: var(--text-primary);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--card-border);
+            margin-top: 5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.3rem; }
+            header { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Glowing Accents -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-ruler-combined"></i>
+            Penggaris Online
+        </div>
+        <div class="nav-actions">
+            <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon" id="themeIcon"></i>
+                <span id="themeText">Dark Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-badge">
+                <i class="fa-solid fa-bolt"></i> Ready to Build
+            </div>
+            <h1>Aapka <span>Modern HTML Demo</span> Tayar Hai!</h1>
+            <p>Yeh ek highly aesthetic aur responsive web page template hai jisme modern styling, dark/light theme, aur interactive JavaScript components shamil hain.</p>
+            
+            <div class="cta-group">
+                <button class="btn btn-primary" id="toastBtn">
+                    <i class="fa-solid fa-bell"></i> Toast Notification Test
+                </button>
+                <a href="#features" class="btn btn-secondary">
+                    <i class="fa-solid fa-compass"></i> Explore Features
+                </a>
+            </div>
+        </section>
+
+        <!-- Feature Grid Section -->
+        <section class="grid-section" id="features">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+                <h3>Glassmorphism UI</h3>
+                <p>Curated color palettes, dark theme aesthetics, aur smooth blur effects ke saath tayar kiya gaya layout.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                </div>
+                <h3>Fully Responsive</h3>
+                <p>har tarah ke screen sizes (Mobile, Tablet, Desktop) par bilkul responsive aur fluid layout.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <h3>Clean Code</h3>
+                <p>HTML5 Semantic structure, modern CSS variables, aur zero-dependency JavaScript code.</p>
+            </div>
+        </section>
+
+        <!-- Interactive Widget Section -->
+        <section class="demo-widget">
+            <div class="widget-header">
+                <h2><i class="fa-solid fa-sliders"></i> Interactive Counter Widget</h2>
+                <p style="color: var(--text-secondary);">State management aur DOM manipulation ka simple live demo.</p>
+            </div>
+
+            <div class="interactive-controls">
+                <div class="counter-display" id="counterValue">0</div>
+                <div class="counter-buttons">
+                    <button class="btn btn-secondary" id="decrementBtn">
+                        <i class="fa-solid fa-minus"></i> Decrease
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <i class="fa-solid fa-rotate-left"></i> Reset
+                    </button>
+                    <button class="btn btn-primary" id="incrementBtn">
+                        <i class="fa-solid fa-plus"></i> Increase
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Penggaris Online. Crafted with precision & passion.</p>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(currentTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('theme', currentTheme);
+            showToast(`Theme changed to ${currentTheme.toUpperCase()} mode!`);
+        });
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'light') {
+                themeIcon.className = 'fa-solid fa-sun';
+                themeText.textContent = 'Light Mode';
+            } else {
+                themeIcon.className = 'fa-solid fa-moon';
+                themeText.textContent = 'Dark Mode';
+            }
+        }
+
+        // Counter Logic
+        let count = 0;
+        const counterValue = document.getElementById('counterValue');
+        const incrementBtn = document.getElementById('incrementBtn');
+        const decrementBtn = document.getElementById('decrementBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        incrementBtn.addEventListener('click', () => {
+            count++;
+            updateCounter();
+        });
+
+        decrementBtn.addEventListener('click', () => {
+            count--;
+            updateCounter();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            count = 0;
+            updateCounter();
+            showToast('Counter has been reset!');
+        });
+
+        function updateCounter() {
+            counterValue.textContent = count;
+        }
+
+        // Toast Notification Function
+        const toastBtn = document.getElementById('toastBtn');
+        const toastContainer = document.getElementById('toast-container');
+
+        toastBtn.addEventListener('click', () => {
+            showToast('🎉 Magic! Demo Toast Notification working perfectly!');
+        });
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #06b6d4;"></i> <span>${message}</span>`;
+            
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s reverse ease-out forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
