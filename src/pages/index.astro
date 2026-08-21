@@ -1,0 +1,85 @@
+---
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Online Ruler 30cm - Penggaris Online</title>
+  <meta name="description" content="Penggaris online cm/mm actual size ruler for your screen." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <!-- Horizontal ruler - TOP -->
+  <canvas id="cv-h"></canvas>
+
+  <!-- Vertical ruler - LEFT -->
+  <canvas id="cv-v"></canvas>
+
+  <!-- Corner -->
+  <div id="corner">0</div>
+
+  <!-- Controls Container - SCREEN CENTER -->
+  <div id="controls-wrap">
+    <!-- Toggle Button -->
+    <div id="toggle-wrap">
+      <button class="tog-btn active" id="btn-cm">CM</button>
+      <button class="tog-btn" id="btn-inch">INCH</button>
+    </div>
+
+    <!-- Calibration Trigger Button -->
+    <button class="cal-btn" id="cal-trigger">
+      <span>⚙️</span>
+      <span>Calibration</span>
+    </button>
+  </div>
+
+  <!-- Calibration Modal Popup -->
+  <div class="modal-backdrop" id="cal-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Screen Calibration</h3>
+        <button class="close-btn" id="close-modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="option-group">
+          <!-- Option 1: Auto Detect -->
+          <label class="radio-card selected" id="card-auto">
+            <input type="radio" name="cal_mode" value="auto" id="rad-auto" checked />
+            <div class="radio-content">
+              <span class="radio-title">Auto Detect (Default)</span>
+              <span class="radio-desc" id="auto-detect-label">Detecting device...</span>
+            </div>
+          </label>
+
+          <!-- Option 2: Select Device -->
+          <label class="radio-card" id="card-device">
+            <input type="radio" name="cal_mode" value="device" id="rad-device" />
+            <div class="radio-content">
+              <span class="radio-title">Choose Your Device</span>
+              <select id="device-select" class="device-select">
+                <option value="">-- Select Your Device --</option>
+              </select>
+            </div>
+          </label>
+        </div>
+
+        <!-- I don't know my device option -->
+        <div>
+          <a href="/calibrate" class="unknown-link">I don't know my device →</a>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="apply-btn" id="apply-cal">Apply Calibration</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/ruler.js"></script>
+</body>
+</html>
+
+<style>
+  @import '../styles/ruler.css';
+</style>

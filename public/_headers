@@ -1,0 +1,21 @@
+# Cache static assets (JS, CSS, images) for 1 year (Astro hashes filenames)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache fonts
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML pages - short cache with revalidation
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Favicon & manifest
+/favicon.*
+  Cache-Control: public, max-age=86400
+
+/site.webmanifest
+  Cache-Control: public, max-age=86400
